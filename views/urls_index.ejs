@@ -4,7 +4,9 @@
   <title>TinyApp</title>
 </head>
 <body>
+<% include partials/_header %>
   <h2>Loop</h2>
+
   <%for (var property in urls) {%>
       <% if (urls.hasOwnProperty(property)) {%>
           <li><%=property %>  - <%- "<a href =http://localhost:8080/u/"+property+">"%> <%= urls[property]%></a>    <%-"<form action=/urls/"+property+"/delete  method = \'post\'>"%>

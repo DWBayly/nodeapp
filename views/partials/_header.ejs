@@ -3,3 +3,20 @@
 <head>
   <title>PARTIAL HEADER</title>
 </head>
+<body>
+
+<%if(username === undefined){%>
+    <form action='/login' method='POST'>
+      <label for="username">USERNAME:</label>
+      <input id="longURL" type="text" name="username"  style="width: 300px">
+      <input type="submit" value="Submit">
+    </form>
+
+<%}else{%>
+<%=username%>
+<form action='/logout' method = 'POST'>
+
+<input type="submit" value="Logout">
+</form>
+<%}%>
+</body>
