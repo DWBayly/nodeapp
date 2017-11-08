@@ -7,12 +7,8 @@
   <h2>Loop</h2>
   <%for (var property in urls) {%>
       <% if (urls.hasOwnProperty(property)) {%>
-          <li><%=urls[property] %>  - <%- "<a href =http://localhost:8080/u/"+property+">"%> <%= property%></a>   </li> <%-"<form action=/urls/"+property+"/delete  method = \'post\'>"%>
-      <input type='submit' value='DELETE'>
-      </form>
-      <%-"<form action=/urls/"+property+"/  method =\'post\'>"%>
-      <input type='submit' value='EDIT'>
-      </form>
+          <li><%=property %>  - <%- "<a href =http://localhost:8080/u/"+property+">"%> <%= urls[property]%></a>    <%-"<form action=/urls/"+property+"/delete  method = \'post\'>"%>
+          <input type='submit' value='DELETE'></form><%-"<form action=/urls/"+encodeURI(property)+"/  method =\'post\'>"%><input type='submit' value='EDIT'></form></li>
       <%}%>
    <%}%>
   <a href= http://localhost:8080/urls/new>Shorten new URL</a>

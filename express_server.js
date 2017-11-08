@@ -19,7 +19,8 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 app.post("/urls/:id", (req, res) => {
-  console.log(req.params.id);
+  console.log(req.body);
+  urlDatabase[req.params.id]=req.body['longURL'];
   res.redirect('http://localhost:8080/urls/'+req.params.id);
 });
 app.post("/urls/:id/delete", (req, res) => {
@@ -50,7 +51,7 @@ app.get("/urls/:id", (req, res) => {
   let id = req.params.id;
   let templateVars={};
   if(urlDatabase.hasOwnProperty(id)){
-    templateVars = {response : 'Full URL:' +urlDatabase[id]+"  Short form:"+id, shorturl:urlDatabase[id]};
+    templateVars = {response : 'Full URL:' +urlDatabase[id]+"  Short form:"+id, shorturl:id};
   }else{
    templateVars = {response :'shorturl not found'}
   }
