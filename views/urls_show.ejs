@@ -6,11 +6,16 @@
 <body>
 <% include partials/_header %>
   <p><%=response%> </p>
+  <%if(!urlfound){%>
+     <form action='/urls/new' method = 'get'>
+     <input type = 'submit' value = "New URL?">
+     </form>
+  <%}else{%>
   <%-"<form action=\'/urls/"+shorturl+"\' method=\'POST\' style=\'margin:150px;\'>"%>
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
       <input type="submit" value="Submit">
   </form>
-    
+  <%}%>
 </body>
 </html>

@@ -4,18 +4,17 @@
   <title>PARTIAL HEADER</title>
 </head>
 <body>
-
-<%if(username === undefined){%>
-    <form action='/login' method='POST'>
-      <label for="username">USERNAME:</label>
-      <input id="longURL" type="text" name="username"  style="width: 300px">
-      <input type="submit" value="Submit">
+<%if(user_id === undefined){%>
+    <form action='/register' method='get'>
+      <label for="register">No user logged in:</label>
+      <input type="submit" value="Register">
+    </form>or<form action='/login' method='get'>
+      <input type="submit" value="Login">
     </form>
 
 <%}else{%>
-<%=username%>
+<%=user_id%>
 <form action='/logout' method = 'POST'>
-
 <input type="submit" value="Logout">
 </form>
 <%}%>
