@@ -4,7 +4,7 @@
   <title>PARTIAL HEADER</title>
 </head>
 <body>
-<%if(user_id === undefined){%>
+<%if(userId === undefined){%>
     <form action='/register' method='get'>
       <label for="register">No user logged in:</label>
       <input type="submit" value="Register">
@@ -13,7 +13,7 @@
     </form>
 
 <%}else{%>
-<%="Logged in as :"+user_id%>
+<%="Logged in as :"+userId%>
 <form action='/logout' method = 'POST'>
 <input type="submit" value="Logout">
 </form>
