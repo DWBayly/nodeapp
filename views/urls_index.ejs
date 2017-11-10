@@ -13,13 +13,14 @@
           <%- "<a href ='http://localhost:8080/u/"+encodeURI(urls[property]["shortURL"])+"'>"%>
           <%=encodeURI(urls[property]["longURL"])%></a>
           <%-"<form action=/urls/"+encodeURI(urls[property]["shortURL"])+"/delete  method = \'post\' >"%>
+          <%console.log("<form action=/urls/"+encodeURI(urls[property]["shortURL"])+"/delete  method = \'post\' >")%>
           <input type='submit' value='DELETE'>
           </form>
          
           <%-"<form action='/urls/"+encodeURI(urls[property]["shortURL"])+"' method=\'get\'>"%><input type='submit' value='EDIT'>
           </form></li>
    <%}%>
-  <a href= http://localhost:8080/urls/new>Shorten new URL</a>
+  <a href= http://localhost:8080/urls/new>Create a New Short Link</a>
  
 </body>
 </html>

@@ -61,9 +61,11 @@ function listLinks(userId){
 }
 app.get("/", (req, res) => {
   if(req.session.userId === undefined){
-    res.render("partials/_header.ejs", {userId: undefined});
+    res.redirect('http://localhost:8080/login');
+    //res.render("partials/_header.ejs", {userId: undefined});
   }else{
-    res.render("partials/_header.ejs", {userId: req.session.userId});
+    res.redirect('http://localhost:8080/urls');
+    //res.render("partials/_header.ejs", {userId: req.session.userId});
   }
 });
 app.listen(PORT, () => {
@@ -88,9 +90,9 @@ app.post("/urls", (req, res) => {
   }
   let shortURL = generateRandomString();
   urlDatabase[shortURL] = {'longURL': req.body['longURL'], 'userId': req.session.userId, 'shortURL': shortURL};
-  console.log(urlDatabase[shortURL]);
-  let templateVars = { userId: req.session.userId, urls: listLinks(req.session.userId)};
-  res.render("urls_index", templateVars);
+  //console.log(urlDatabase[shortURL]);
+  //let templateVars = { userId: req.session.userId, urls: listLinks(req.session.userId)};
+  res.redirect('http://localhost:8080/urls/'+shortURL);
 });
 app.post("/login", (req, res) => {
   
@@ -107,13 +109,13 @@ app.post("/login", (req, res) => {
     //console.log(req.body)
     res.redirect('http://localhost:8080/');
   }else{
-    res.status(403).send("No user found of that name, please register");
+    res.status(403).redirect('http://localhost:8080/register');
   }
   
   
 });
 app.post("/logout", (req, res) => {
-  req.session.userId = "";
+  req.session.userId = undefined;
   console.log("cookies cleared");
   res.redirect('http://localhost:8080/urls');
   
@@ -124,18 +126,23 @@ app.post("/urls/:id", (req, res) => {
   }
   urlDatabase[req.params.id]["longURL"] = req.body['longURL'];
   let templateVars = { userId: req.session.userId, urls: listLinks[req.session.userId] };
-  res.render("urls_index.ejs", templateVars);
+  res.redirect('http://localhost:8080/urls');
 });
 app.post("/urls/:id/delete", (req, res) => {
   if(req.session.userId === undefined ){
     res.render("partials/_header.ejs", {userId: undefined});
-  }
+  }else{
   //console.log(req.params.id);
-  console.log("HERE!");
-  let templateVars = { userId: req.session.userId, urls: listLinks[req.session.userId] };
-  delete urlDatabase[req.params.id];
-  console.log(urlDatabase[req.params.id]);
-  res.render('urls_index', templateVars);
+    console.log("HERE!");
+    if(!urlDatabase.hasOwnProperty(req.params.id)){
+      res.status(404).send("no URL of that name found");
+    }else{
+      //let templateVars = { userId: req.session.userId, urls: listLinks[req.session.userId] };
+      delete urlDatabase[req.params.id];
+      console.log(urlDatabase[req.params.id]);
+      res.redirect('http://localhost:8080/urls/');
+    }
+  }
 });
 app.get("/urls.json", (req, res) => {
   if(req.session.userId === undefined ){
@@ -149,17 +156,18 @@ app.get("/hello", (req, res) => {
 app.get("/urls", (req, res) => {
   if(req.session.userId === undefined ){
     res.render("partials/_header.ejs", {userId: undefined});
+  }else{
+    console.log(req.session.userId);
+    let templateVars = { userId: req.session.userId, urls: listLinks(req.session.userId) };
+    res.render("urls_index.ejs", templateVars);
   }
-  console.log(req.session.userId);
-  let templateVars = { userId: req.session.userId, urls: listLinks(req.session.userId) };
-  res.render("urls_index.ejs", templateVars);
 });
 app.get("/urls/new", (req, res) => {
   
   if(req.session.userId === undefined){
     res.redirect("http://localhost:8080/login");
   }else{
-    res.render("urls_new");
+    res.render("urls_new",{userId: req.session.userId});
   }
   
 });
@@ -175,6 +183,8 @@ app.get("/urls/:id", (req, res) => {
     }else{
       templateVars = { userId: req.session.userId, response: 'shorturl not found', urlfound: false};
     }
+  }else{
+    templateVars = { userId: req.session.userId, response: 'shorturl not found', urlfound: false};
   }
   //console.log(templateVars);
   res.render("urls_show", templateVars);
