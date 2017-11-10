@@ -6,12 +6,18 @@
 <body>
 <% include partials/_header %>
   <h2>Sites</h2>
-
+  <%console.log(urls)%>
   <%for (var property in urls) {%>
-      <% if (urls.hasOwnProperty(property)) {%>
-          <li><%=property %>  - <%- "<a href =http://localhost:8080/u/"+property+">"%> <%= urls[property]%></a>    <%-"<form action=/urls/"+property+"/delete  method = \'post\'>"%>
-          <input type='submit' value='DELETE'></form><%-"<form action=/urls/"+encodeURI(property)+"/  method =\'post\'>"%><input type='submit' value='EDIT'></form></li>
-      <%}%>
+      <%//console.log("This is property:"+);%> 
+          <li><%=urls[property]["shortURL"]%>  -
+          <%- "<a href ='http://localhost:8080/u/"+encodeURI(urls[property]["shortURL"])+"'>"%>
+          <%=encodeURI(urls[property]["longURL"])%></a>
+          <%-"<form action=/urls/"+encodeURI(urls[property]["shortURL"])+"/delete  method = \'post\' >"%>
+          <input type='submit' value='DELETE'>
+          </form>
+         
+          <%-"<form action='/urls/"+encodeURI(urls[property]["shortURL"])+"' method=\'get\'>"%><input type='submit' value='EDIT'>
+          </form></li>
    <%}%>
   <a href= http://localhost:8080/urls/new>Shorten new URL</a>
  
