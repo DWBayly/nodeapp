@@ -92,7 +92,7 @@ app.post("/urls", (req, res) => {
   urlDatabase[shortURL] = {'longURL': req.body['longURL'], 'userId': req.session.userId, 'shortURL': shortURL};
   //console.log(urlDatabase[shortURL]);
   //let templateVars = { userId: req.session.userId, urls: listLinks(req.session.userId)};
-  res.redirect('http://localhost:8080/urls/'+shortURL);
+  res.redirect('http://localhost:8080/urls/' + shortURL);
 });
 app.post("/login", (req, res) => {
   
@@ -167,7 +167,7 @@ app.get("/urls/new", (req, res) => {
   if(req.session.userId === undefined){
     res.redirect("http://localhost:8080/login");
   }else{
-    res.render("urls_new",{userId: req.session.userId});
+    res.render("urls_new", {userId: req.session.userId});
   }
   
 });
